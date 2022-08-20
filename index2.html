@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="/assets/sweetalert/sweetalert2.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+
+<body>
+    <div class="container-fluid">
+        <header>
+            <h1>Customer information</h1>
+            <!-- <form id="frmCreate" action=""> -->
+            <!-- <div class="row mt-3">
+                    <div class="col-lg-6">
+                        <label for="fullName" class="fw-bold">Full Name</label>
+                        <input type="text" id="fullName" name="fullName" class="form-control">
+                    </div>
+                    <div class="col-lg-6">
+                        <label for="email" class="fw-bold">Email</label>
+                        <input type="text" id="email" name="email" class="form-control">
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-lg-6">
+                        <label for="phone" class="fw-bold">Phone</label>
+                        <input type="text" id="phone" name="phone" class="form-control">
+                    </div>
+                    <div class="col-lg-6">
+                        <label for="address" class="fw-bold">Address</label>
+                        <input type="text" id="address" name="address" class="form-control">
+                    </div>
+                </div> -->
+            <div class="row mt-3">
+                <div class="col-lg-3">
+                    <button type="button" id="btnCreate" class="btn btn-outline-primary">
+                        <i class="fa-solid fa-plus"></i>
+                        <span> Create</span>
+                    </button>
+                </div>
+            </div>
+            </form>
+        </header>
+
+        <div class="content">
+            <table id="tbCustomer" class="table table-hover mt-3">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th class="text-center">#</th>
+                        <th class="text-center">Full Name</th>
+                        <th class="text-center">Email</th>
+                        <th class="text-center">Phone</th>
+                        <th class="text-center">Balance</th>
+                        <th class="text-center">Province</th>
+                        <th class="text-center">District</th>
+                        <th class="text-center">Ward</th>
+                        <th class="text-center">Address</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+    <!-- end container -->
+
+    <!-- Create Modal -->
+    <div class="modal fade" id="mdCreate" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal create</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="frmCreate" action="" method="POST">
+                        <div class="row mt-3">
+                            <div class="col-lg-4">
+                                <label for="fullName" class="fw-bold">Full Name</label>
+                                <input type="text" id="fullName" name="fullName" class="form-control">
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="email" class="fw-bold">Email</label>
+                                <input type="text" id="email" name="email" class="form-control">
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="phone" class="fw-bold">Phone</label>
+                                <input type="text" id="phone" name="phone" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row mt-3 mb-3">
+                            <div class="col-lg-3">
+                                <label for="province" class="fw-bold">Province</label>
+                                <select name="province" id="province" class="form-select"></select>
+                            </div>
+                            <div class="col-lg-3">
+                                <label for="district" class="fw-bold">District</label>
+                                <select name="district" id="district" class="form-select"></select>
+                            </div>
+                            <div class="col-lg-3">
+                                <label for="ward" class="fw-bold">Ward</label>
+                                <select name="ward" id="ward" class="form-select"></select>
+                            </div>
+                            <div class="col-lg-3">
+                                <label for="address" class="fw-bold">Address</label>
+                                <input type="text" id="address" name="address" class="form-control">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="btnCreateCustomer" class="btn btn-outline-primary">
+                        <i class="fa-solid fa-plus"></i>
+                        Create
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Update Modal -->
+    <div class="modal fade" id="mdUpdate" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal update</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="frmUpdate" action="" method="POST">
+                        <div class="row mt-3">
+                            <input type="hidden" id="idUp">
+                            <div class="col-lg-6">
+                                <label for="fullNameUp" class="fw-bold">Full Name</label>
+                                <input type="text" id="fullNameUp" name="fullNameUp" class="form-control">
+                            </div>
+                            <div class="col-lg-6">
+                                <label for="emailUp" class="fw-bold">Email</label>
+                                <input type="text" id="emailUp" name="emailUp" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row mt-3 mb-3">
+                            <div class="col-lg-6">
+                                <label for="phoneUp" class="fw-bold">Phone</label>
+                                <input type="text" id="phoneUp" name="phoneUp" class="form-control">
+                            </div>
+                        </div>
+                        <div>
+                            <div class="row mt-3 mb-3">
+                                <div class="col-lg-3">
+                                    <label for="provinceUp" class="fw-bold">Province</label>
+                                    <select name="provinceUp" id="provinceUp" class="form-select"></select>
+                                </div>
+                                <div class="col-lg-3">
+                                    <label for="districtUp" class="fw-bold">District</label>
+                                    <select name="districtUp" id="districtUp" class="form-select"></select>
+                                </div>
+                                <div class="col-lg-3">
+                                    <label for="wardUp" class="fw-bold">Ward</label>
+                                    <select name="wardUp" id="wardUp" class="form-select"></select>
+                                </div>
+                                <div class="col-lg-3">
+                                    <label for="addressUp" class="fw-bold">Address</label>
+                                    <input type="text" id="addressUp" name="addressUp" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="btnUpdate" class="btn btn-outline-secondary">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                        Update
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Deposit Modal -->
+    <div class="modal fade" id="mdDeposit" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal deposit</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-alert-danger hide"></div>
+
+                    <form id="frmDeposit" action="">
+                        <div class="row mt-3">
+                            <div class="col-lg-6">
+                                <label for="customerIdDep" class="fw-bold">Customer ID</label>
+                                <input type="text" id="customerIdDep" name="customerIdDep" class="form-control">
+                            </div>
+                            <div class="col-lg-6">
+                                <label for="fullNameDep" class="fw-bold">Full Name</label>
+                                <input type="text" id="fullNameDep" name="fullNameDep" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row mt-3 mb-3">
+                            <div class="col-lg-6">
+                                <label for="balanceDep" class="fw-bold">Balance</label>
+                                <input type="text" id="balanceDep" name="balanceDep" class="form-control">
+                            </div>
+                            <div class="col-lg-6">
+                                <label for="transactionAmountDep" class="fw-bold">Transaction Amount</label>
+                                <input type="text" id="transactionAmountDep" name="transactionAmountDep"
+                                    class="form-control">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="btnDeposit" class="btn btn-outline-success">
+                        <i class="fa-solid fa-plus"></i>
+                        Deposit
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/assets/jquery/jquery-v3.6.0.min.js"></script>
+    <script src="/assets/jquery/jquery.validate.min.js"></script>
+    <script src="/assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/sweetalert/sweetalert2.all.min.js"></script>
+
+    <script src="/assets/js/app.model.js"></script>
+
+    <script>
+
+        function initTooltip() {
+            const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+            const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+        }
+
+        let customer = new Customer();
+        let provinces = [];
+        let districts = [];
+        let wards = [];
+
+        $("#btnCreate").on('click', () => {
+            $("#mdCreate").modal('show');
+        });
+
+        function getAllProvinces() {
+            return $.ajax({
+                headers: {
+                    "accept": "application/json",
+                    "content-type": "application/json"
+                },
+                type: "GET",
+                url: "https://vapi.vnappmob.com/api/province/"
+            })
+                .done((data) => {
+                    $.each(data.results, (i, item) => {
+                        let str = `<option value="${item.province_id}">${item.province_name}</option>`;
+                        $("#province").append(str);
+                    });
+                    provinces = data;
+                })
+                .fail((jqXHR) => {
+
+                })
+        }
+
+        function getAllDistrictsByProvinceId(provinceId) {
+            return $.ajax({
+                headers: {
+                    "accept": "application/json",
+                    "content-type": "application/json"
+                },
+                type: "GET",
+                url: "https://vapi.vnappmob.com/api/province/district/" + provinceId
+            })
+                .done((data) => {
+                    $.each(data.results, (i, item) => {
+                        let str = `<option value="${item.district_id}">${item.district_name}</option>`;
+                        $("#district").append(str);
+                    });
+                    districts = data;
+                })
+                .fail((jqXHR) => {
+
+                })
+        }
+
+        function getAllWardsByDistrictId(districtId) {
+            return $.ajax({
+                headers: {
+                    "accept": "application/json",
+                    "content-type": "application/json"
+                },
+                type: "GET",
+                url: "https://vapi.vnappmob.com/api/province/ward/" + districtId
+            })
+                .done((data) => {
+                    $.each(data.results, (i, item) => {
+                        let str = `<option value="${item.ward_id}">${item.ward_name}</option>`;
+                        $("#ward").append(str);
+                    });
+                    wards = data;
+                })
+                .fail((jqXHR) => {
+
+                })
+        }
+
+
+        function selectAddress() {
+            getAllProvinces().then(() => {
+                let provinceId = $("#province").val();
+
+                getAllDistrictsByProvinceId(provinceId).then(() => {
+
+                    let districtId = $("#district").val();
+
+                    getAllWardsByDistrictId(districtId);
+                });
+            });
+
+        }
+        selectAddress();
+
+        $("#province").change(() => {
+
+            $("#district").empty();
+            $("#ward").empty();
+            let provinceId = $("#province").val();
+
+            getAllDistrictsByProvinceId(provinceId).then(() => {
+
+                let districtId = $("#district").val();
+
+                getAllWardsByDistrictId(districtId);
+            })
+        })
+
+        $("#district").change(() => {
+
+            $("#ward").empty();
+            let districtId = $("#district").val();
+
+            getAllWardsByDistrictId(districtId);
+        })
+
+        function getAllCustomers() {
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "GET",
+                url: 'http://localhost:3300/customers?deleted=0&_sort=id&_order=desc'
+            })
+                .done((data) => {
+                    drawCustomers(data);
+                })
+                .fail((jqXHR) => {
+                    console.log(jqXHR);
+                });
+        }
+        getAllCustomers();
+
+        let btnCreate = $('#btnCreateCustomer');
+
+        btnCreate.on('click', () => {
+
+            let fullName = $('#fullName').val();
+            let email = $('#email').val();
+            let phone = $('#phone').val();
+            // let balance = $('#balance').val();
+            let provinceId = $('#province').val();
+
+            // console.log(provinces,districts,wards);
+
+            let provinceName;
+            $.each(provinces.results, (i, item) => {
+
+                if (item.province_id == provinceId) {
+                    // console.log(provinceId, item.province_id);
+                    provinceName = item.province_name;
+
+                }
+            })
+
+            let districtId = $('#district').val();
+            let districtName;
+            $.each(districts.results, (i, item) => {
+                if (districtId == item.district_id) {
+                    districtName = item.district_name;
+                }
+            })
+
+
+            let wardId = $('#ward').val();
+            let wardName;
+            $.each(wards.results, (i, item) => {
+                if (wardId == item.ward_id) {
+                    wardName = item.ward_name;
+                }
+            })
+
+
+            let address = $('#address').val();
+            console.log(address);
+
+            let locationRegion = new LocationRegion(provinceId, provinceName, districtId, districtName, wardId, wardName, address);
+
+            customer = new Customer(null, fullName, email, phone, 0, locationRegion, 0);
+            // delete customer.id;
+
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "POST",
+                url: 'http://localhost:3300/customers',
+                data: JSON.stringify(customer)
+            })
+                .done((item) => {
+                    customer = item;
+                    locationRegion = customer.locationRegion;
+
+                    let str = `
+                        <tr id="tr_${customer.id}">
+                            <td><span class="select-tab unselected" id="select_${item.id}"></span></td>
+                            <td>${customer.id}</td>
+                            <td>${customer.fullName}</td>
+                            <td>${customer.email}</td>
+                            <td>${customer.phone}</td>
+                            <td>${customer.balance}</td>
+                            <td>${locationRegion.provinceName}</td>
+                            <td>${locationRegion.districtName}</td>
+                            <td>${locationRegion.wardName}</td>
+                            <td>${locationRegion.address}</td>
+                        </tr>
+                    `;
+
+                    let tbCustomer = $('#tbCustomer tbody');
+                    tbCustomer.prepend(str);
+
+                    $("#frmCreate")[0].reset();
+                    initTooltip();
+
+                    // handleShowModal();
+
+                })
+                .fail((jqXHR) => {
+                    console.log(jqXHR);
+                });
+
+            // drawCustomers();
+        });
+        function drawCustomers(data) {
+
+            $('#tbCustomer tbody').empty();
+
+            $.each(data, (i, item) => {
+                let str = `
+            <tr id="tr_${item.id}">
+                <td><span class="select-tab unselected" id="select_${item.id}"></span></td>
+                <td>${item.id}</td>
+                <td>${item.fullName}</td>
+                <td>${item.email}</td>
+                <td>${item.phone}</td>
+                <td>${item.balance}</td>
+                <td>${item.locationRegion.provinceName}</td>
+                <td>${item.locationRegion.districtName}</td>
+                <td>${item.locationRegion.wardName}</td>
+                <td>${item.locationRegion.address}</td>
+            </tr>
+        `;
+
+                let tbCustomer = $('#tbCustomer tbody');
+                tbCustomer.prepend(str);
+
+                let btnSpan = $(`#select_${item.id}`);
+                btnSpan.on('click',()=>{
+                })
+            })
+
+            initTooltip();
+
+            // handleShowModal();
+        }
+
+
+        function removeEventShowModal() {
+            $(".edit").off();
+            $(".deposit").off();
+            $(".withdraw").off();
+            $(".transfer").off();
+            $(".delete").off();
+        }
+        let btnUpdate = $("#btnUpdate");
+
+        btnUpdate.on('click', () => {
+            $("#frmUpdate").submit();
+        });
+        function doUpdate() {
+            let customerId = +$("#idUp").val();
+            let fullName = $('#fullNameUp').val();
+            let email = $('#emailUp').val();
+            let phone = $('#phoneUp').val();
+            let balance = $('#balanceUp');
+            let province = $('#provinceUp');
+            let district = $('#districtUp');
+            let ward = ('#wardUp');
+            let address = $('#addressUp').val();
+
+            // customer = new Customer(customerId, fullName, email, phone, address, 0, 0);
+            customer.fullName = fullName;
+            customer.email = email;
+            customer.phone = phone;
+            localStorage.province = province;
+            localStorage.district = district;
+            localStorage.ward = ward;
+            localStorage.address = address;
+
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "PUT",
+                url: 'http://localhost:3300/customers/' + customerId,
+                data: JSON.stringify(customer)
+            })
+                .done((item) => {
+
+                    let str = `
+                <tr id="tr_${item.id}">
+                    
+                    <td>${item.id}</td>
+                    <td>${item.fullName}</td>
+                    <td>${item.email}</td>
+                    <td class="text-center">${item.phone}</td>
+                    <td class="text-end">${item.balance}</td>
+                    <td >${item.province}</td>
+                    <td>${item.district}</td>
+                    <td>${item.ward}</td>
+                    <td>${item.address}</td>
+                </tr>
+            `;
+
+                    let currentRow = $("#tr_" + item.id);
+                    currentRow.replaceWith(str);
+
+                    $("#mdUpdate").modal('hide');
+
+                    initTooltip();
+
+                    removeEventShowModal();
+
+                    // handleShowModal();
+                })
+                .fail((jqXHR) => {
+                    console.log(jqXHR);
+                });
+        }
+        function handleShowUpdateModal() {
+            let btnUpdate = $(".edit");
+            
+            btnUpdate.on('click', function () {
+                console.log("aaaa");
+
+                let id = $(this).data('id');
+
+                getCustomerById(id).then(() => {
+                    $("#idUp").val(customer.id);
+                    $("#fullNameUp").val(customer.fullName);
+                    $("#emailUp").val(customer.email);
+                    $("#phoneUp").val(customer.phone);
+                    // $("#balance").val(customer.balance);
+                    $("#province").val(customer.province);
+                    $('#district').val(customer.district);
+                    $("#ward").val(customer.ward);
+                    $("#addressUp").val(customer.address);
+
+                    $("#mdUpdate").modal('show');
+                })
+                    .catch(() => {
+                        Swal.fire({
+                            title: "Customer information invalid",
+                            icon: 'error',
+                        })
+                    });
+            })
+        }
+        handleShowUpdateModal();
+function handleShowEditModal(){
+    
+    
+}
+
+    let str = `
+    <td>
+        <button class="btn btn-outline-secondary edit" data-id="${item.id}" data-bs-toggle="tooltip"
+            data-bs-placement="top" data-bs-title="Update">
+            <i class="fa-solid fa-pen-to-square"></i>
+        </button>
+    </td>
+    <td>
+        <button class="btn btn-outline-success deposit" data-id="${item.id}" data-bs-toggle="tooltip"
+            data-bs-placement="top" data-bs-title="Deposit">
+            <i class="fa-solid fa-plus"></i>
+        </button>
+    </td>
+    <td>
+        <button class="btn btn-outline-warning withdraw" data-id="${item.id}" data-bs-toggle="tooltip"
+            data-bs-placement="top" data-bs-title="Withdraw">
+            <i class="fa-solid fa-minus"></i>
+        </button>
+    </td>
+    <td>
+        <button class="btn btn-outline-primary transfer" data-id="${item.id}" data-bs-toggle="tooltip"
+            data-bs-placement="top" data-bs-title="Transfer">
+            <i class="fa-solid fa-right-left"></i>
+        </button>
+    </td>
+    <td>
+        <button class="btn btn-outline-danger delete" data-id="${item.id}" data-bs-toggle="tooltip"
+            data-bs-placement="top" data-bs-title="Delete">
+            <i class="fa-solid fa-trash-can"></i>
+        </button>
+    </td>
+    </tr>`
+    let currentRow = $("#tr_" + item.id);
+                    currentRow.replaceWith(str);
+
+                    $("#mdUpdate").modal('hide');
+    </script>
+</body>
+<footer class="footer">
+</footer>
+
+</html>
